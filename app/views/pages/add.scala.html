@@ -1,0 +1,31 @@
+
+@(contactForm: Form[models.Contact])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@templates.base {
+
+    <div class="row wow fadeInUp" ng-controller="addCtrl">
+      <div class="large-6 columns large-centered">
+        <fieldset class="wow rotateIn">
+          <legend>{{ header }}</legend>
+          @helper.form(action = routes.Application.addContact()) {
+            <div class="row">
+              <div class="large-12 columns wow slideInLeft">
+                @helper.inputText(contactForm("fullName"), '_label -> "Fullname:",'_showConstraints -> false)
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 columns wow slideInRight">
+                @helper.inputText(contactForm("number"), '_label -> "Number:",'_showConstraints -> false)
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 columns wow bounceInDown">
+                <input type="submit" class="button" value="submit"/>
+              </div>
+            </div>
+          }
+        </fieldset>
+      </div>
+    </div>
+
+}

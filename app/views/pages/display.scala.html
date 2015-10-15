@@ -1,0 +1,61 @@
+@()(implicit request: RequestHeader)
+@templates.base {
+
+    <div class="row" ng-controller="displayCtrl">
+      <div class="large-12 columns large-centered">
+        <h2>{{ header }}</h2>
+        <hr/>
+        <table>
+          <thead>
+            <tr>
+              <th width="300">Fullname</th>
+              <th width="300">Number</th>
+              <th width="300">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="contact in contacts" class="wow fadeInDown" data-wow-duration=".{{ contact.id }}">
+              <td>{{ contact.fullName }}</td>
+              <td>{{ contact.number }}</td>
+              <td>
+                <ul class="button-group round">
+                  <li><a href="/update/{{ contact.id }}" ng-click="update($event)" class="tiny button success">update</a></li>
+                  <li><a href="/delete/{{ contact.id }}" ng-click="delete($event)"  class="tiny button alert">delete</a></li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='reveal-modal' id='update-modal' data-reveal >
+          <div class="row">
+            <div class="large-12 columns large-centered">
+                @helper.form(action = routes.Application.updateContact()) {
+                  <div class="row">
+                    <input name="id" type="hidden" value="{{ id }}" />
+                    <div class="large-12 columns">
+                      <label>Fullname
+                        <input name="fullName" type="text" value="{{ fullname }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <label>Number
+                        <input name="number" type="number" value="{{ number }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <input type="submit" class="button" value="Update"/>
+                    </div>
+                  </div>
+                }
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+}

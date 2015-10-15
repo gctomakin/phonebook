@@ -1,0 +1,38 @@
+@(title: String)(implicit request: RequestHeader)
+
+<head>
+    <title>@title</title>
+    <link href='https://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/foundation/css/foundation.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/wow.js/css/libs/animate.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <script src="@routes.Assets.versioned("bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/foundation/js/foundation.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/angular/angular.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/angular-route/angular-route.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/mustache.js/mustache.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/wow.js/dist/wow.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/app.js")" type="text/javascript"></script>
+</head>
+<nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="@controllers.routes.Application.index">@title</a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li @if(request.uri == "/add"){ class="active" } ><a href="@controllers.routes.Application.add">Add Contacts</a></li>
+      <li @if(request.uri == "/display"){ class="active" } ><a href="@controllers.routes.Application.display">View Contacts</a></li>
+    </ul>
+    <!-- Left Nav Section -->
+    <ul class="left">
+      <li @if(request.uri == "/"){ class="active" } ><a href="@controllers.routes.Application.index">Home</a></li>
+    </ul>
+  </section>
+</nav>
