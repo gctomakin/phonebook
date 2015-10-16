@@ -1,0 +1,182 @@
+
+@(bankForm: Form[models.UserBank])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@templates.base {
+
+<div class="row" ng-controller="bankCtrl">
+  <div class="large-12 columns large-centered">
+    <h2>Banks</h2>
+    <hr>
+    <a href="#" ng-click="addbank()" type="button" class="button">Add Bank</a>
+      <div id="add-bank-div" class="row wow fadeInUp">
+        <div class="large-12 columns large-centered">
+          <fieldset class="wow rotateIn">
+            <legend>{{ header }}</legend>
+              @helper.form(action = routes.UserBanks.addBank()) {
+              <div class="row">
+                <div class="large-12 columns wow slideInLeft">
+                   @helper.inputText(bankForm("bank_name"), '_label -> "Bank Name:",'_showConstraints -> false)
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns wow slideInRight">
+                   @helper.inputText(bankForm("branch"), '_label -> "Branch:",'_showConstraints -> false)
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns wow slideInRight">
+                  <label>Account Type
+                    <select name="acct_type">
+                      <option value="savings">Savings</option>
+                      <option value="debit">Debit</option>
+                      <option value="credit">Credit</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns wow slideInRight">
+                  @helper.inputText(bankForm("acct_number"), '_label -> "Account Number:",'_showConstraints -> false)
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns wow slideInRight">
+                  @helper.inputText(bankForm("acct_owner"), '_label -> "Account Owner:",'_showConstraints -> false)
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns wow bounceInDown">
+                  <input type="submit" class="button" value="submit"/>
+                </div>
+              </div>
+            }
+          </fieldset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+        <h3>User Bank</h3>
+        <hr>
+          <table>
+            <thead>
+              <tr>
+                <th width="300">Bank Name</th>
+                <th width="300">Branch</th>
+                <th width="300">Account Type</th>
+                <th width="300">Account Number</th>
+                <th width="300">Account Owner</th>
+                <th width="300">Status</th>
+                <th width="500">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="userbank in userbanks" class="wow fadeInDown animated" data-wow-delay=".{{ userbank.id }}">
+                <td>{{ userbank.bank_name }}</td>
+                <td>{{ userbank.branch }}</td>
+                <td>{{ userbank.acct_type }}</td>
+                <td>{{ userbank.acct_number }}</td>
+                <td>{{ userbank.acct_owner }}</td>
+                <td>{{ userbank.status }}</td>
+                <td>
+                  <ul class="button-group round">
+                    <li><a href="/updatebank/{{ userbank.id }}" ng-click="update($event)" class="tiny button success">update</a></li>
+                    <li><a href="/deletebank/{{ userbank.id }}" ng-click="delete($event)"  class="tiny button alert">delete</a></li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>All Users Bank</h3>
+          <hr>
+            <table>
+              <thead>
+                <tr>
+                  <th width="300">Bank Name</th>
+                  <th width="300">Branch</th>
+                  <th width="300">Account Type</th>
+                  <th width="300">Account Number</th>
+                  <th width="300">Account Owner</th>
+                  <th width="300">Status</th>
+                  <th width="500">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="alluserbank in alluserbanks" class="wow fadeInDown animated" data-wow-delay=".{{ alluserbank.id }}">
+                  <td>{{ alluserbank.bank_name }}</td>
+                  <td>{{ alluserbank.branch }}</td>
+                  <td>{{ alluserbank.acct_type }}</td>
+                  <td>{{ alluserbank.acct_number }}</td>
+                  <td>{{ alluserbank.acct_owner }}</td>
+                  <td>{{ alluserbank.status }}</td>
+                  <td>
+                    <ul class="button-group round">
+                      <li><a href="/updatebank/{{ alluserbank.id }}" ng-click="update($event)" class="tiny button success">update</a></li>
+                      <li><a href="/deletebank/{{ alluserbank.id }}" ng-click="delete($event)"  class="tiny button alert">delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+      <div class='reveal-modal' id='update-modal' data-reveal >
+          <div class="row">
+            <div class="large-12 columns large-centered">
+                @helper.form(action = routes.UserBanks.updateBank()) {
+                  <div class="row">
+                    <input name="id" type="hidden" value="{{ id }}" />
+                    <input name="id_user" type="hidden" value="2" />
+                    <input name="status" type="hidden" value="{{ status }}" />
+                    <div class="large-12 columns">
+                      <label>Branch Name
+                        <input name="bank_name" type="text" value="{{ bank_name }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <label>Branch
+                        <input name="branch" type="text" value="{{ branch }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <label>Account Type
+                        <select name="acct_type">
+                          <option value="{{ acct_type }}" selected>{{ acct_type }}</option>
+                          <option value="savings">Savings</option>
+                          <option value="debit">Debit</option>
+                          <option value="credit">Credit</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <label>Account Number
+                        <input name="acct_number" type="number" value="{{ acct_number }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <label>Account Owner
+                        <input name="acct_owner" type="text" value="{{ acct_owner }}" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <input type="submit" class="button" value="Update"/>
+                    </div>
+                  </div>
+                }
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+}

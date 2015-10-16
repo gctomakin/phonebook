@@ -12,6 +12,15 @@ GET    /update/:id                  controllers.Application.update(id: Long)
 POST   /delete/:id                  controllers.Application.delete(id: Long)
 POST   /update                      controllers.Application.updateContact
 
+# User Banks
+GET    /banks                       controllers.UserBanks.index
+POST   /addBank                     controllers.UserBanks.addBank
+GET    /getuserbanks                controllers.UserBanks.getUserBanks
+GET    /getallusersbanks            controllers.UserBanks.getAllUserBanks
+GET    /updatebank/:id              controllers.UserBanks.update(id: Long)
+POST   /deletebank/:id              controllers.UserBanks.delete(id: Long)
+POST   /updatebank                  controllers.UserBanks.updateBank
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
